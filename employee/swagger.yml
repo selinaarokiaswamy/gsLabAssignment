@@ -1,0 +1,172 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger Rest Article
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+paths:
+  /employee:
+    get:
+      operationId: employee.employee_controller.get
+      tags:
+        - All Employees
+      summary: Read the entire list of employee
+      description: Read the list of employee
+      parameters:
+        - name: length
+          in: query
+          type: integer
+          description: Number of employee to get from employee
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          description: Offset from beginning of list where to start gathering employee
+          required: false
+      responses:
+        200:
+          description: Successfully read employee list
+          schema:
+            type: array
+            items:
+              properties:
+                name:
+                  type: string
+                department:
+                  type: string
+                designation:
+                  type: string
+
+    post:
+      operationId: employee.employee_controller.create
+      tags:
+      - employee
+      summary: Create a employee and add it to the employee list
+      description: Create a new employee in the employee list
+      parameters:
+        - name: employee
+          in: body
+          description: employee to create
+          required: True
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: name of employee
+              department:
+                type: string
+                description: Department employee belongs to
+              designation:
+                type: string
+                description: Employee's designation
+      responses:
+        200:
+          description: Successfully created employee in list
+        201:
+          description: Successfully created employee in list
+
+  /employee/{id}:
+    get:
+      operationId: employee.employee_controller.get_single_employee
+      tags:
+        - employee
+      summary: Read one employee from the employee list
+      description: Read one employee from the employee list
+      parameters:
+        - name: id
+          in: path
+          description: ID of the employee to get from the list
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully read employee from employee list operation
+          schema:
+            properties:
+              name:
+                type: string
+              designation:
+                type: string
+              department:
+                type: string
+              phoneNo:
+                type: string
+
+    put:
+      operationId: employee.employee_controller.update_employee
+      tags:
+        - employee
+      summary: Update a employee in the employee list
+      description: Update a employee in the employee list
+      parameters:
+        - name: id
+          in: path
+          description: ID of the employee to update in the list
+          type: string
+          required: True
+        - name: employee
+          in: body
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              designation:
+                type: string
+              department:
+                type: string
+              phoneNo:
+                type: string
+      responses:
+        200:
+          description: Successfully updated employee in employee list
+
+    delete:
+      operationId: employee.employee_controller.delete_employee
+      tags:
+        - employee
+      summary: Delete a employee from the employee list
+      description: Delete a employee
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully deleted a employee from employee list
+  /employee/bulk:
+    post:
+      operationId: employee.employee_controller.bulk_create
+      tags:
+        - employee
+      summary: Create all employees and add it to the employee list
+      description: Create a new employee in the employee list
+      parameters:
+        - name: employee
+          in: body
+          description: employee to create
+          required: True
+          schema:
+            type: array
+            properties:
+              name:
+                type: string
+                description: name of employee
+              department:
+                type: string
+                description: Department employee belongs to
+              designation:
+                type: string
+                description: Employee's designation
+      responses:
+        200:
+          description: Successfully created employee in list
+        201:
+          description: Successfully created employee in list
